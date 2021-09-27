@@ -1,12 +1,10 @@
 package com.wei.youcaihua.ui.place
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.wei.youcaihua.R
+import com.wei.youcaihua.databinding.PlaceItemBinding
 import com.wei.youcaihua.logic.model.Place
 
 /**
@@ -16,15 +14,15 @@ import com.wei.youcaihua.logic.model.Place
  * 今日心情：♪（＾∀＾●）ﾉ
  * 描述：
  */
-class PlaceAdapter(private val fragment: Fragment, private val placeList: List<Place>) : RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val placeName: TextView = view.findViewById(R.id.placeName)
-        val placeAddress: TextView = view.findViewById(R.id.placeAddress)
+class PlaceAdapter(private val placeList: List<Place>) : RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
+    inner class ViewHolder(binding: PlaceItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        val placeName: TextView = binding.placeName
+        val placeAddress: TextView = binding.placeAddress
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.place_item, parent, false)
-        return ViewHolder(view)
+        val binding = PlaceItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
