@@ -17,7 +17,7 @@ import com.wei.youcaihua.ui.weather.WeatherActivity
  * 今日心情：♪（＾∀＾●）ﾉ
  * 描述：
  */
-class PlaceAdapter(private val fragment: Fragment, private val placeList: List<Place>) : RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
+class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: List<Place>) : RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
     inner class ViewHolder(binding: PlaceItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val placeName: TextView = binding.placeName
         val placeAddress: TextView = binding.placeAddress
@@ -34,6 +34,7 @@ class PlaceAdapter(private val fragment: Fragment, private val placeList: List<P
                 putExtra("location_lat", place.location.lat)
                 putExtra("place_name", place.name)
             }
+            fragment.viewModel.savePlace(place)
             fragment.startActivity(intent)
         }
         return holder

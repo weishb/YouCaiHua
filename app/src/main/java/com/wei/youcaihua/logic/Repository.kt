@@ -1,6 +1,8 @@
 package com.wei.youcaihua.logic
 
 import androidx.lifecycle.liveData
+import com.wei.youcaihua.logic.dao.PlaceDao
+import com.wei.youcaihua.logic.model.Place
 import com.wei.youcaihua.logic.model.Weather
 import com.wei.youcaihua.logic.network.MyNetWork
 import kotlinx.coroutines.Dispatchers
@@ -112,5 +114,9 @@ object Repository {
         }
         emit(result)
     }
+
+    fun savePlace(place: Place) = PlaceDao.savePlace(place)
+    fun getSavedPlace() = PlaceDao.getSavedPlace()
+    fun isPlaceSaved() = PlaceDao.isPlaceSaved()
 
 }

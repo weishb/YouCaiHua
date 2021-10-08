@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.wei.youcaihua.logic.Repository
+import com.wei.youcaihua.logic.dao.PlaceDao
 import com.wei.youcaihua.logic.model.Place
 
 /**
@@ -16,6 +17,7 @@ import com.wei.youcaihua.logic.model.Place
 class PlaceViewModel : ViewModel() {
     private val searchLiveData = MutableLiveData<String>()
     val placeList = ArrayList<Place>()
+
     //2.searchLiveData值产生变化,就会执行switchMap函数，在里面调用Repository.searchPlaces(it)，将返回的LiveData对象转换成一个可观察的LiveData对象，Activity观察placeLiveData对象即可
     val placeLiveData = Transformations.switchMap(searchLiveData) {
         Repository.searchPlaces(it)
@@ -25,4 +27,8 @@ class PlaceViewModel : ViewModel() {
     fun searchPlaces(query: String) {
         searchLiveData.value = query
     }
+
+    fun savePlace(place: Place) = Repository.savePlace(place)
+    fun getSavedPlace() = Repository.getSavedPlace()
+    fun isPlaceSaved() = Repository.isPlaceSaved()
 }
