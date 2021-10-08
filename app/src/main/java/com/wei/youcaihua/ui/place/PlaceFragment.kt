@@ -34,7 +34,7 @@ class PlaceFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val layoutManager = LinearLayoutManager(activity)
         binding.recycleView.layoutManager = layoutManager
-        adapter = PlaceAdapter(viewModel.placeList)
+        adapter = PlaceAdapter(this, viewModel.placeList)
         binding.recycleView.adapter = adapter
         binding.searchPlaceEdit.addTextChangedListener {
             val content = it.toString()

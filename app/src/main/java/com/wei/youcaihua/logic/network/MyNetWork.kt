@@ -17,9 +17,11 @@ import kotlin.coroutines.suspendCoroutine
 object MyNetWork {
     //利用ServiceCreator构建器创建一个PlaceService接口的动态代理对象
     private val placeService = ServiceCreator.create(PlaceService::class.java)
+
     //创建searchPlaces函数，并调用placeService中searchPlaces方法，发起搜索城市数据的请求
     //当外部调用MyNetWork.searchPlaces方法时，retrofit会立即发起网络请求，同时当前协程也会阻塞，知道服务器响应请求之后，await函数会将解析出来的数据模型对象取出并返回，同时恢复当前协程执行
     suspend fun searchPlaces(query: String) = placeService.searchPlaces(query).await()
+
     //使用协程简化回调写法：给Call<T>定义扩展函数await()
     private suspend fun <T> Call<T>.await(): T {
         //suspendCoroutine函数必须在协程作用域或者挂起函数中才能调用，接受一个Lambda表达式，主要作用是将当前协程立即挂起，然后再一个普通线程中执行Lambda表达式中的代码
@@ -42,4 +44,8 @@ object MyNetWork {
             })
         }
     }
+
+    private val weatherService = ServiceCreator.create(WeatherService::class.java)
+    suspend fun getDailyWeather(lng: String, lat: String) = weatherService.getDailyWeather(lng, lat).await()
+    suspend fun getRealtimeWeather(lng: String, lat: String) = weatherService.getRealtimeWeather(lng, lat).await()
 }
